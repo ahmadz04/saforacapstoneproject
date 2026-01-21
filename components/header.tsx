@@ -2,14 +2,15 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 
 const navLinks = [
   { href: "#overview", label: "Overview" },
-  { href: "#features", label: "Features" },
+  { href: "#solution", label: "Solution" },
+  { href: "#technology", label: "Technology" },
   { href: "#team", label: "Team" },
-  { href: "#results", label: "Results" },
 ]
 
 export function Header() {
@@ -34,8 +35,14 @@ export function Header() {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <nav className="flex items-center justify-between h-16 lg:h-20">
-          <Link href="/" className="text-lg font-semibold tracking-tight">
-            HealthSync AI
+          <Link href="/" className="relative h-8 w-28">
+            <Image
+              src="/images/gaitway-logo.png"
+              alt="GaitWay"
+              fill
+              className="object-contain"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -52,8 +59,8 @@ export function Header() {
           </div>
 
           <div className="hidden md:block">
-            <Button size="sm" className="rounded-full px-6">
-              Contact
+            <Button size="sm" className="rounded-full px-6" asChild>
+              <Link href="#team">Contact Team</Link>
             </Button>
           </div>
 
@@ -82,8 +89,8 @@ export function Header() {
                   {link.label}
                 </Link>
               ))}
-              <Button size="sm" className="rounded-full w-fit px-6 mt-2">
-                Contact
+              <Button size="sm" className="rounded-full w-fit px-6 mt-2" asChild>
+                <Link href="#team">Contact Team</Link>
               </Button>
             </div>
           </div>

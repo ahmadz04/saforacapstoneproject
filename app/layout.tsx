@@ -8,8 +8,8 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'HealthSync AI | Capstone Project 2025',
-  description: 'An innovative AI-powered healthcare platform that revolutionizes patient care through intelligent data analysis and personalized treatment recommendations.',
+  title: 'GaitWay | UCLA Bioengineering Capstone 2025',
+  description: 'GaitWay is a modular and wearable gait analysis system that provides continuous monitoring of motor symptoms for Parkinson\'s patients, with the goal of improving therapeutic outcomes through personalized care.',
   generator: 'v0.app',
   icons: {
     icon: [

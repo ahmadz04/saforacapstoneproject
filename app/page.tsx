@@ -1,24 +1,32 @@
 import { Header } from "@/components/header"
 import { HeroSection } from "@/components/hero-section"
-import { ChallengesSection } from "@/components/challenges-section"
+import { OverviewSection } from "@/components/overview-section"
+import { GaitMattersSection } from "@/components/gait-matters-section"
+import { ProblemSection } from "@/components/problem-section"
+import { NeedSection } from "@/components/need-section"
 import { SolutionSection } from "@/components/solution-section"
 import { FeaturesSection } from "@/components/features-section"
-import { TeamSection } from "@/components/team-section"
 import { ResultsSection } from "@/components/results-section"
-import { ContactSection } from "@/components/contact-section"
+import { DesignGoalsSection } from "@/components/design-goals-section"
+import { NextStepsSection } from "@/components/next-steps-section"
+import { TeamSection } from "@/components/team-section"
 import { Footer } from "@/components/footer"
 
-export default function CapstoneShowcase() {
+export default function GaitWayShowcase() {
   return (
     <main className="min-h-screen">
       <Header />
       <HeroSection />
-      <ChallengesSection />
+      <OverviewSection />
+      <GaitMattersSection />
+      <ProblemSection />
+      <NeedSection />
       <SolutionSection />
       <FeaturesSection />
-      <TeamSection />
       <ResultsSection />
-      <ContactSection />
+      <DesignGoalsSection />
+      <NextStepsSection />
+      <TeamSection />
       <Footer />
     </main>
   )

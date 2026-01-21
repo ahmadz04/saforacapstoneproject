@@ -1,22 +1,15 @@
 import Link from "next/link"
-import { Github, Linkedin, Twitter } from "lucide-react"
+import Image from "next/image"
 
 const navigation = {
   project: [
     { name: "Overview", href: "#overview" },
-    { name: "Features", href: "#features" },
+    { name: "Solution", href: "#solution" },
+    { name: "Technology", href: "#technology" },
     { name: "Team", href: "#team" },
-    { name: "Results", href: "#results" },
   ],
   resources: [
-    { name: "Documentation", href: "#" },
-    { name: "Research Paper", href: "#" },
-    { name: "GitHub Repository", href: "#" },
-    { name: "Demo Video", href: "#" },
-  ],
-  contact: [
-    { name: "healthsync@university.edu", href: "mailto:healthsync@university.edu" },
-    { name: "Department of Computer Science", href: "#" },
+    { name: "Results", href: "#results" },
   ],
 }
 
@@ -25,36 +18,25 @@ export function Footer() {
     <footer className="bg-muted/50 border-t border-border">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-16">
-          <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="text-lg font-semibold tracking-tight">
-              HealthSync AI
+          <div className="col-span-2 md:col-span-2">
+            <Link href="/" className="relative block h-8 w-28">
+              <Image
+                src="/images/gaitway-logo.png"
+                alt="GaitWay"
+                fill
+                className="object-contain"
+              />
             </Link>
-            <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
-              A capstone project transforming healthcare through AI innovation.
+            <p className="mt-4 text-sm text-muted-foreground leading-relaxed max-w-md">
+              A modular and wearable gait analysis system that provides continuous monitoring
+              of motor symptoms for Parkinson's patients, with the goal of improving therapeutic
+              outcomes through personalized care.
             </p>
-            <div className="flex gap-4 mt-6">
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="GitHub"
-              >
-                <Github className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="Twitter"
-              >
-                <Twitter className="w-5 h-5" />
-              </a>
-            </div>
+            <p className="mt-4 text-sm text-muted-foreground">
+              Senior Capstone Project — 2025/2026
+              <br />
+              Department of Bioengineering, UCLA
+            </p>
           </div>
 
           <div>
@@ -88,42 +70,14 @@ export function Footer() {
               ))}
             </ul>
           </div>
-
-          <div>
-            <h3 className="text-sm font-medium text-foreground mb-4">Contact</h3>
-            <ul className="space-y-3">
-              {navigation.contact.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    href={item.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-muted-foreground">
-            © 2025 HealthSync AI. Capstone Project.
+        <div className="mt-16 pt-8 border-t border-border">
+          <p className="text-sm text-muted-foreground text-center">
+            GaitWay — Senior Capstone Project 2025/2026 — Department of Bioengineering, UCLA
+            <br />
+            <span className="text-xs">For educational and research purposes only.</span>
           </p>
-          <div className="flex gap-6">
-            <Link
-              href="#"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="#"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Acknowledgments
-            </Link>
-          </div>
         </div>
       </div>
     </footer>
