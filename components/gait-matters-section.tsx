@@ -54,12 +54,13 @@ export function GaitMattersSection() {
             </div>
           </FadeIn>
 
-          <Stagger className="grid sm:grid-cols-2 gap-4">
+          <Stagger className="grid sm:grid-cols-2 gap-4 auto-rows-fr">
             {gaitChanges.map((change) => (
-              <StaggerItem key={change.title}>
+              <StaggerItem key={change.title} className="h-full">
                 <motion.div
                   whileHover={{ y: -2 }}
                   transition={{ duration: 0.2 }}
+                  className="h-full"
                 >
                   <Card className="border border-[var(--border)] bg-[var(--background-secondary)] hover:shadow-md transition-shadow duration-300 h-full">
                     <CardContent className="p-6">

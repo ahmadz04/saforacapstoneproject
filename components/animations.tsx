@@ -1,9 +1,13 @@
 "use client"
 
-import { motion, AnimatePresence, LayoutGroup } from "framer-motion"
+import { motion, AnimatePresence, LayoutGroup, useReducedMotion } from "framer-motion"
 import { ReactNode, createContext, useContext, useState } from "react"
 
-// Animation variants for fade-in with slide
+// Premium easing - smooth, professional feel
+const premiumEase = [0.22, 1, 0.36, 1] // cubic-bezier for expo-out
+const smoothEase = [0.25, 0.1, 0.25, 1]
+
+// Animation variants for fade-in with slide (premium timing)
 export const fadeInUp = {
   initial: { opacity: 0, y: 16 },
   animate: { opacity: 1, y: 0 },
@@ -17,9 +21,9 @@ export const fadeIn = {
 }
 
 export const scaleIn = {
-  initial: { opacity: 0, scale: 0.95 },
+  initial: { opacity: 0, scale: 0.96 },
   animate: { opacity: 1, scale: 1 },
-  exit: { opacity: 0, scale: 0.95 },
+  exit: { opacity: 0, scale: 0.96 },
 }
 
 // Stagger children animation
@@ -27,23 +31,36 @@ export const staggerContainer = {
   initial: {},
   animate: {
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.12,
       delayChildren: 0.1,
     },
   },
 }
 
-// Spring transition for smooth morph effects
+// Premium spring transition (no bounce, professional)
 export const springTransition = {
   type: "spring",
-  stiffness: 350,
-  damping: 30,
+  stiffness: 280,
+  damping: 35,
+  mass: 1,
 }
 
-// Calm transition for subtle animations
+// Premium calm transition for subtle animations
 export const calmTransition = {
+  duration: 0.5,
+  ease: premiumEase,
+}
+
+// Slower premium transition for scroll reveals
+export const revealTransition = {
   duration: 0.6,
-  ease: [0.25, 0.1, 0.25, 1], // Smooth ease-out
+  ease: premiumEase,
+}
+
+// Card hover transition
+export const cardHoverTransition = {
+  duration: 0.35,
+  ease: smoothEase,
 }
 
 // FadeIn component for scroll-triggered animations
@@ -64,6 +81,8 @@ export function FadeIn({
   duration = 0.6,
   once = true,
 }: FadeInProps) {
+  const shouldReduceMotion = useReducedMotion()
+
   const directionOffset = {
     up: { y: 16 },
     down: { y: -16 },
@@ -72,15 +91,20 @@ export function FadeIn({
     none: {},
   }
 
+  // If reduced motion is preferred, skip animations
+  if (shouldReduceMotion) {
+    return <div className={className}>{children}</div>
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, ...directionOffset[direction] }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once, margin: "-50px" }}
+      viewport={{ once, margin: "-80px" }}
       transition={{
         duration,
         delay,
-        ease: [0.25, 0.1, 0.25, 1],
+        ease: premiumEase,
       }}
       className={className}
     >
@@ -94,19 +118,31 @@ interface StaggerProps {
   children: ReactNode
   className?: string
   delay?: number
+  staggerDelay?: number
 }
 
-export function Stagger({ children, className = "", delay = 0 }: StaggerProps) {
+export function Stagger({
+  children,
+  className = "",
+  delay = 0,
+  staggerDelay = 0.12
+}: StaggerProps) {
+  const shouldReduceMotion = useReducedMotion()
+
+  if (shouldReduceMotion) {
+    return <div className={className}>{children}</div>
+  }
+
   return (
     <motion.div
       initial="initial"
       whileInView="animate"
-      viewport={{ once: true, margin: "-50px" }}
+      viewport={{ once: true, margin: "-80px" }}
       variants={{
         initial: {},
         animate: {
           transition: {
-            staggerChildren: 0.1,
+            staggerChildren: staggerDelay,
             delayChildren: delay,
           },
         },
@@ -125,10 +161,16 @@ interface StaggerItemProps {
 }
 
 export function StaggerItem({ children, className = "" }: StaggerItemProps) {
+  const shouldReduceMotion = useReducedMotion()
+
+  if (shouldReduceMotion) {
+    return <div className={className}>{children}</div>
+  }
+
   return (
     <motion.div
       variants={fadeInUp}
-      transition={calmTransition}
+      transition={revealTransition}
       className={className}
     >
       {children}
@@ -136,7 +178,7 @@ export function StaggerItem({ children, className = "" }: StaggerItemProps) {
   )
 }
 
-// Section header with morph-like settle animation
+// Section header with premium settle animation
 interface SectionHeaderProps {
   label?: string
   title: string
@@ -152,14 +194,36 @@ export function SectionHeader({
   className = "",
   centered = false,
 }: SectionHeaderProps) {
+  const shouldReduceMotion = useReducedMotion()
+
+  if (shouldReduceMotion) {
+    return (
+      <div className={`mb-12 lg:mb-16 ${centered ? "text-center" : ""} ${className}`}>
+        {label && (
+          <p className="eyebrow-label mb-3">
+            {label}
+          </p>
+        )}
+        <h2 className={`text-3xl md:text-4xl font-medium text-foreground text-balance ${!centered ? "max-w-2xl" : ""}`}>
+          {title}
+        </h2>
+        {description && (
+          <p className={`text-muted-foreground mt-4 ${centered ? "max-w-2xl mx-auto" : ""}`}>
+            {description}
+          </p>
+        )}
+      </div>
+    )
+  }
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
+      viewport={{ once: true, margin: "-80px" }}
       transition={{
-        duration: 0.7,
-        ease: [0.25, 0.1, 0.25, 1],
+        duration: 0.6,
+        ease: premiumEase,
       }}
       className={`mb-12 lg:mb-16 ${centered ? "text-center" : ""} ${className}`}
     >
@@ -168,8 +232,8 @@ export function SectionHeader({
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.1, duration: 0.5 }}
-          className="text-sm font-medium text-[var(--accent-teal)] mb-3 tracking-wide uppercase"
+          transition={{ delay: 0.1, duration: 0.5, ease: premiumEase }}
+          className="eyebrow-label mb-3"
         >
           {label}
         </motion.p>
@@ -187,7 +251,7 @@ export function SectionHeader({
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.2, duration: 0.5 }}
+          transition={{ delay: 0.2, duration: 0.5, ease: premiumEase }}
           className={`text-muted-foreground mt-4 ${centered ? "max-w-2xl mx-auto" : ""}`}
         >
           {description}
@@ -221,7 +285,8 @@ export function ExpandableCardProvider({ children }: { children: ReactNode }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+              transition={{ duration: 0.3, ease: smoothEase }}
+              className="fixed inset-0 bg-[var(--color-primary-dark)]/20 backdrop-blur-sm z-40"
               onClick={() => setExpandedId(null)}
             />
           )}
@@ -251,6 +316,7 @@ export function ExpandableCard({
 }: ExpandableCardProps) {
   const { expandedId, setExpandedId } = useExpandableCard()
   const isExpanded = expandedId === id
+  const shouldReduceMotion = useReducedMotion()
 
   return (
     <>
@@ -258,9 +324,9 @@ export function ExpandableCard({
         layoutId={`card-${id}`}
         onClick={() => setExpandedId(id)}
         className={`cursor-pointer ${className}`}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        transition={springTransition}
+        whileHover={shouldReduceMotion ? {} : { y: -4 }}
+        whileTap={shouldReduceMotion ? {} : { scale: 0.99 }}
+        transition={cardHoverTransition}
       >
         {children}
       </motion.div>
@@ -277,8 +343,9 @@ export function ExpandableCard({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
+                transition={{ delay: 0.2, duration: 0.3 }}
                 onClick={() => setExpandedId(null)}
-                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-secondary/80 transition-colors"
+                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-secondary/80 transition-colors duration-300"
               >
                 <svg
                   width="20"
@@ -306,12 +373,18 @@ interface PageTransitionProps {
 }
 
 export function PageTransition({ children }: PageTransitionProps) {
+  const shouldReduceMotion = useReducedMotion()
+
+  if (shouldReduceMotion) {
+    return <>{children}</>
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.4, ease: smoothEase }}
     >
       {children}
     </motion.div>
@@ -333,6 +406,41 @@ export function LogoMorph({ isScrolled, children, className = "" }: LogoMorphPro
       transition={springTransition}
       className={className}
     >
+      {children}
+    </motion.div>
+  )
+}
+
+// Premium card wrapper with hover effects
+interface PremiumCardProps {
+  children: ReactNode
+  className?: string
+  onClick?: () => void
+}
+
+export function PremiumCard({ children, className = "", onClick }: PremiumCardProps) {
+  const shouldReduceMotion = useReducedMotion()
+
+  return (
+    <motion.div
+      onClick={onClick}
+      className={`relative overflow-hidden ${className}`}
+      whileHover={shouldReduceMotion ? {} : {
+        y: -4,
+        transition: cardHoverTransition
+      }}
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={revealTransition}
+    >
+      {/* Subtle accent line on hover */}
+      <motion.div
+        className="absolute bottom-0 left-0 h-0.5 bg-[var(--accent-rust)]"
+        initial={{ width: 0 }}
+        whileHover={{ width: "100%" }}
+        transition={{ duration: 0.35, ease: premiumEase }}
+      />
       {children}
     </motion.div>
   )

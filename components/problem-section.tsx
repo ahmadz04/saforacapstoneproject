@@ -1,9 +1,12 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { AlertTriangle, DollarSign, Building2, Eye } from "lucide-react"
-import { FadeIn, SectionHeader, Stagger, StaggerItem } from "./animations"
+import { FadeIn, SectionHeader, Stagger, StaggerItem, cardHoverTransition } from "./animations"
+
+// Premium easing
+const premiumEase = [0.22, 1, 0.36, 1]
 
 const problems = [
   {
@@ -48,27 +51,38 @@ const barriers = [
 ]
 
 export function ProblemSection() {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
-    <section className="py-20 lg:py-28 bg-[var(--background-secondary)]">
+    <section className="py-12 lg:py-16 bg-[var(--background-secondary)] scroll-mt-20">
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
         <SectionHeader
-          label="The Problem"
+          label="The Challenge"
           title="Current care falls short of what patients need"
+          className="mb-8 lg:mb-10"
         />
 
-        <Stagger className="grid md:grid-cols-2 gap-6 mb-12">
+        <Stagger className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8" staggerDelay={0.1}>
           {problems.map((problem) => (
-            <StaggerItem key={problem.title}>
+            <StaggerItem key={problem.title} className="h-full">
               <motion.div
-                whileHover={{ y: -2 }}
-                transition={{ duration: 0.2 }}
+                whileHover={shouldReduceMotion ? {} : { y: -4 }}
+                transition={cardHoverTransition}
+                className="h-full group"
               >
-                <Card className="border border-[var(--border)] bg-card hover:shadow-md transition-shadow duration-300 h-full">
-                  <CardContent className="p-8">
-                    <div className="w-10 h-10 rounded-lg bg-[var(--accent-rust)]/10 flex items-center justify-center mb-4">
-                      <problem.icon className="w-5 h-5 text-[var(--accent-rust)]" />
+                <Card className="border border-[var(--border)] bg-card h-full overflow-hidden relative transition-shadow duration-300 group-hover:shadow-lg group-hover:shadow-[var(--accent-teal)]/5">
+                  {/* Accent line on hover */}
+                  <motion.div
+                    className="absolute bottom-0 left-0 h-0.5 bg-[var(--accent-rust)]"
+                    initial={{ width: 0 }}
+                    whileHover={{ width: "100%" }}
+                    transition={{ duration: 0.35, ease: premiumEase }}
+                  />
+                  <CardContent className="p-5">
+                    <div className="w-8 h-8 rounded-lg bg-[var(--accent-teal)]/10 flex items-center justify-center mb-3">
+                      <problem.icon className="w-4 h-4 text-[var(--accent-teal)]" />
                     </div>
-                    <h3 className="text-lg font-medium text-foreground mb-3">
+                    <h3 className="text-base font-medium text-foreground mb-2">
                       {problem.title}
                     </h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">
@@ -82,20 +96,23 @@ export function ProblemSection() {
         </Stagger>
 
         <FadeIn delay={0.2}>
-          <div className="bg-card rounded-2xl p-8 lg:p-12 border border-[var(--border)]">
-            <h3 className="text-lg font-medium text-foreground mb-6">
+          <div className="bg-card rounded-xl p-6 lg:p-8 border border-[var(--border)] relative overflow-hidden">
+            {/* Subtle top accent line */}
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[var(--accent-rust)]/30 to-transparent" />
+
+            <h3 className="text-base font-medium text-foreground mb-4">
               Additional Barriers to Adoption
             </h3>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-3 gap-4">
               {barriers.map((barrier, index) => (
                 <motion.div
                   key={barrier.title}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ delay: index * 0.1, duration: 0.5, ease: premiumEase }}
                 >
-                  <p className="font-medium text-foreground mb-2">{barrier.title}</p>
+                  <p className="font-medium text-foreground mb-1 text-sm">{barrier.title}</p>
                   <p className="text-sm text-muted-foreground">{barrier.description}</p>
                 </motion.div>
               ))}

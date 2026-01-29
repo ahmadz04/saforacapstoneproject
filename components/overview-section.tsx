@@ -1,10 +1,13 @@
 "use client"
 
 import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { Target, GitBranch, Eye, X } from "lucide-react"
-import { FadeIn, SectionHeader, Stagger, StaggerItem } from "./animations"
+import { FadeIn, SectionHeader, Stagger, StaggerItem, cardHoverTransition, revealTransition } from "./animations"
+
+// Premium easing
+const premiumEase = [0.22, 1, 0.36, 1]
 
 const pillars = [
   {
@@ -41,6 +44,7 @@ const pillars = [
 
 export function OverviewSection() {
   const [expandedId, setExpandedId] = useState<string | null>(null)
+  const shouldReduceMotion = useReducedMotion()
 
   return (
     <section id="overview" className="py-20 lg:py-28 bg-[var(--background-secondary)]">
@@ -51,21 +55,30 @@ export function OverviewSection() {
         />
 
         {/* Cards Grid */}
-        <Stagger className="grid md:grid-cols-3 gap-6">
+        <Stagger className="grid md:grid-cols-3 gap-6" staggerDelay={0.15}>
           {pillars.map((pillar) => (
             <StaggerItem key={pillar.id}>
               <motion.div
                 layoutId={`card-container-${pillar.id}`}
                 onClick={() => setExpandedId(pillar.id)}
-                className="cursor-pointer h-full"
-                whileHover={{ y: -4 }}
-                transition={{ duration: 0.2 }}
+                className="cursor-pointer h-full group"
+                whileHover={shouldReduceMotion ? {} : { y: -4 }}
+                transition={cardHoverTransition}
               >
-                <Card className="border border-[var(--border)] bg-card hover:shadow-lg transition-shadow duration-300 h-full">
+                <Card className="border border-[var(--border)] bg-card h-full overflow-hidden relative transition-shadow duration-300 group-hover:shadow-lg group-hover:shadow-[var(--accent-teal)]/5">
+                  {/* Accent line that appears on hover */}
+                  <motion.div
+                    className="absolute bottom-0 left-0 h-0.5 bg-[var(--accent-rust)]"
+                    initial={{ width: 0 }}
+                    whileHover={{ width: "100%" }}
+                    transition={{ duration: 0.35, ease: premiumEase }}
+                  />
                   <CardContent className="p-8">
                     {/* Icon */}
                     <motion.div layoutId={`card-icon-${pillar.id}`}>
-                      <pillar.icon className="w-8 h-8 text-[var(--accent-teal)] mb-4" />
+                      <div className="w-10 h-10 rounded-lg bg-[var(--accent-teal)]/10 flex items-center justify-center mb-4">
+                        <pillar.icon className="w-5 h-5 text-[var(--accent-teal)]" />
+                      </div>
                     </motion.div>
 
                     {/* Title */}
@@ -83,7 +96,7 @@ export function OverviewSection() {
 
                     {/* Placeholder indicator */}
                     <div className="mt-6 pt-4 border-t border-[var(--border-light)]">
-                      <div className="w-full h-24 rounded-lg bg-[var(--background-secondary)] flex items-center justify-center">
+                      <div className="w-full h-24 rounded-lg bg-[var(--background-secondary)] border border-[var(--accent-teal)]/10 flex items-center justify-center">
                         <p className="text-xs text-[var(--foreground-muted)]">
                           {pillar.expandedContent.placeholder}
                         </p>
@@ -105,8 +118,8 @@ export function OverviewSection() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+                transition={{ duration: 0.4, ease: premiumEase }}
+                className="fixed inset-0 bg-[var(--color-primary-dark)]/25 backdrop-blur-sm z-40"
                 onClick={() => setExpandedId(null)}
               />
 
@@ -119,8 +132,9 @@ export function OverviewSection() {
                     className="fixed inset-4 md:inset-8 lg:inset-y-16 lg:inset-x-32 xl:inset-x-64 z-50 bg-card rounded-2xl shadow-2xl overflow-auto"
                     transition={{
                       type: "spring",
-                      stiffness: 300,
-                      damping: 30,
+                      stiffness: 280,
+                      damping: 35,
+                      mass: 1,
                     }}
                   >
                     <div className="p-8 md:p-12">
@@ -129,9 +143,9 @@ export function OverviewSection() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        transition={{ delay: 0.2 }}
+                        transition={{ delay: 0.2, duration: 0.3 }}
                         onClick={() => setExpandedId(null)}
-                        className="absolute top-4 right-4 w-10 h-10 rounded-full bg-[var(--background-secondary)] flex items-center justify-center hover:bg-[var(--background-tertiary)] transition-colors"
+                        className="absolute top-4 right-4 w-10 h-10 rounded-full bg-[var(--background-secondary)] flex items-center justify-center hover:bg-[var(--background-tertiary)] transition-colors duration-300"
                       >
                         <X className="w-5 h-5" />
                       </motion.button>
@@ -140,7 +154,9 @@ export function OverviewSection() {
                       <div className="grid md:grid-cols-2 gap-8 items-start">
                         <div>
                           <motion.div layoutId={`card-icon-${pillar.id}`}>
-                            <pillar.icon className="w-12 h-12 text-[var(--accent-teal)] mb-6" />
+                            <div className="w-14 h-14 rounded-xl bg-[var(--accent-teal)]/10 flex items-center justify-center mb-6">
+                              <pillar.icon className="w-7 h-7 text-[var(--accent-teal)]" />
+                            </div>
                           </motion.div>
 
                           <motion.h3
@@ -151,18 +167,18 @@ export function OverviewSection() {
                           </motion.h3>
 
                           <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.2 }}
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2, duration: 0.5, ease: premiumEase }}
                             className="text-muted-foreground leading-relaxed mb-6"
                           >
                             {pillar.expandedContent.details}
                           </motion.p>
 
                           <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.3 }}
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.3, duration: 0.5, ease: premiumEase }}
                             className="text-sm text-muted-foreground"
                           >
                             {pillar.description}
@@ -171,10 +187,10 @@ export function OverviewSection() {
 
                         {/* Large Placeholder */}
                         <motion.div
-                          initial={{ opacity: 0, scale: 0.95 }}
+                          initial={{ opacity: 0, scale: 0.96 }}
                           animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.2 }}
-                          className="w-full aspect-[4/3] rounded-xl bg-[var(--background-secondary)] border border-[var(--border-light)] flex items-center justify-center"
+                          transition={{ delay: 0.25, duration: 0.5, ease: premiumEase }}
+                          className="w-full aspect-[4/3] rounded-xl bg-[var(--background-secondary)] border border-[var(--accent-teal)]/15 flex items-center justify-center"
                         >
                           <div className="text-center p-6">
                             <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-[var(--background-tertiary)] flex items-center justify-center">
