@@ -1,5 +1,9 @@
+"use client"
+
+import { motion } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { DollarSign, Home, Heart, Shield } from "lucide-react"
+import { FadeIn, SectionHeader, Stagger, StaggerItem } from "./animations"
 
 const goals = [
   {
@@ -30,35 +34,38 @@ const goals = [
 
 export function DesignGoalsSection() {
   return (
-    <section className="py-24 lg:py-32 bg-background">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="mb-16">
-          <p className="text-sm font-medium text-muted-foreground mb-4">
-            Impact
-          </p>
-          <h2 className="text-3xl md:text-4xl font-light text-foreground text-balance">
-            Design Goals & Intended Impact
-          </h2>
-        </div>
+    <section className="py-20 lg:py-28 bg-[var(--background)]">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+        <SectionHeader
+          label="Impact"
+          title="Design Goals & Intended Impact"
+        />
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <Stagger className="grid md:grid-cols-2 gap-6">
           {goals.map((goal) => (
-            <Card
-              key={goal.title}
-              className="border border-border bg-card hover:shadow-lg transition-shadow duration-300"
-            >
-              <CardContent className="p-8">
-                <goal.icon className="w-8 h-8 text-foreground mb-4" />
-                <h3 className="text-lg font-medium text-foreground mb-3">
-                  {goal.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {goal.description}
-                </p>
-              </CardContent>
-            </Card>
+            <StaggerItem key={goal.title}>
+              <motion.div
+                whileHover={{ y: -2 }}
+                transition={{ duration: 0.2 }}
+                className="h-full"
+              >
+                <Card className="border border-[var(--border)] bg-card hover:shadow-md transition-shadow duration-300 h-full">
+                  <CardContent className="p-8">
+                    <div className="w-12 h-12 rounded-xl bg-[var(--accent-teal)]/10 flex items-center justify-center mb-6">
+                      <goal.icon className="w-6 h-6 text-[var(--accent-teal)]" />
+                    </div>
+                    <h3 className="text-lg font-medium text-foreground mb-3">
+                      {goal.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {goal.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </div>
     </section>
   )

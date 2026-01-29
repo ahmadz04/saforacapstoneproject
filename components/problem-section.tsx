@@ -1,12 +1,16 @@
+"use client"
+
+import { motion } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { AlertTriangle, DollarSign, Building2, Eye } from "lucide-react"
+import { FadeIn, SectionHeader, Stagger, StaggerItem } from "./animations"
 
 const problems = [
   {
     icon: AlertTriangle,
     title: "Narrow Therapeutic Window",
     description:
-      "Parkinson's medications must be carefully dosed within a narrow \"Goldilocks zone.\" Too little provides inadequate symptom relief; too much causes dyskinesia.",
+      "Parkinson's medications must be carefully dosed within a narrow range. Too little provides inadequate symptom relief; too much causes dyskinesia.",
   },
   {
     icon: Eye,
@@ -28,57 +32,76 @@ const problems = [
   },
 ]
 
+const barriers = [
+  {
+    title: "Visually Intrusive",
+    description: "Many wearable devices are bulky and stigmatizing, making patients reluctant to wear them in public.",
+  },
+  {
+    title: "Uncomfortable",
+    description: "Devices designed for short-term clinical use are often impractical for all-day wear over extended periods.",
+  },
+  {
+    title: "No Accessible Solution",
+    description: "There is currently no widely accessible, affordable solution for continuous gait monitoring in daily life.",
+  },
+]
+
 export function ProblemSection() {
   return (
-    <section className="py-24 lg:py-32 bg-background">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="mb-16">
-          <p className="text-sm font-medium text-muted-foreground mb-4">
-            The Problem
-          </p>
-          <h2 className="text-3xl md:text-4xl font-light text-foreground text-balance max-w-2xl">
-            Current care falls short of what patients need
-          </h2>
-        </div>
+    <section className="py-20 lg:py-28 bg-[var(--background-secondary)]">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+        <SectionHeader
+          label="The Problem"
+          title="Current care falls short of what patients need"
+        />
 
-        <div className="grid md:grid-cols-2 gap-6 mb-12">
+        <Stagger className="grid md:grid-cols-2 gap-6 mb-12">
           {problems.map((problem) => (
-            <Card
-              key={problem.title}
-              className="border border-border bg-card hover:shadow-lg transition-shadow duration-300"
-            >
-              <CardContent className="p-8">
-                <problem.icon className="w-8 h-8 text-muted-foreground mb-4" />
-                <h3 className="text-lg font-medium text-foreground mb-3">
-                  {problem.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {problem.description}
-                </p>
-              </CardContent>
-            </Card>
+            <StaggerItem key={problem.title}>
+              <motion.div
+                whileHover={{ y: -2 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Card className="border border-[var(--border)] bg-card hover:shadow-md transition-shadow duration-300 h-full">
+                  <CardContent className="p-8">
+                    <div className="w-10 h-10 rounded-lg bg-[var(--accent-rust)]/10 flex items-center justify-center mb-4">
+                      <problem.icon className="w-5 h-5 text-[var(--accent-rust)]" />
+                    </div>
+                    <h3 className="text-lg font-medium text-foreground mb-3">
+                      {problem.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {problem.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
 
-        <div className="bg-muted/50 rounded-lg p-8 lg:p-12">
-          <h3 className="text-xl font-medium text-foreground mb-4">
-            Additional Barriers to Adoption
-          </h3>
-          <div className="grid md:grid-cols-3 gap-6 text-sm text-muted-foreground">
-            <div>
-              <p className="font-medium text-foreground mb-2">Visually Intrusive</p>
-              <p>Many wearable devices are bulky and stigmatizing, making patients reluctant to wear them in public.</p>
-            </div>
-            <div>
-              <p className="font-medium text-foreground mb-2">Uncomfortable</p>
-              <p>Devices designed for short-term clinical use are often impractical for all-day wear over extended periods.</p>
-            </div>
-            <div>
-              <p className="font-medium text-foreground mb-2">No Accessible Solution</p>
-              <p>There is currently no widely accessible, affordable solution for continuous gait monitoring in daily life.</p>
+        <FadeIn delay={0.2}>
+          <div className="bg-card rounded-2xl p-8 lg:p-12 border border-[var(--border)]">
+            <h3 className="text-lg font-medium text-foreground mb-6">
+              Additional Barriers to Adoption
+            </h3>
+            <div className="grid md:grid-cols-3 gap-6">
+              {barriers.map((barrier, index) => (
+                <motion.div
+                  key={barrier.title}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <p className="font-medium text-foreground mb-2">{barrier.title}</p>
+                  <p className="text-sm text-muted-foreground">{barrier.description}</p>
+                </motion.div>
+              ))}
             </div>
           </div>
-        </div>
+        </FadeIn>
       </div>
     </section>
   )
