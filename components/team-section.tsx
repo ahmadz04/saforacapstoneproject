@@ -1,81 +1,78 @@
-import { Card, CardContent } from "@/components/ui/card"
+"use client"
+
+import { motion } from "framer-motion"
+import { FadeIn, SectionHeader, Stagger, StaggerItem } from "./animations"
+import Image from "next/image"
 
 const team = [
-  {
-    name: "Kirby Johnson",
-    role: "Bioengineering",
-  },
-  {
-    name: "Kyra Sunil",
-    role: "Bioengineering",
-  },
-  {
-    name: "Caleb Liow",
-    role: "Bioengineering",
-  },
-  {
-    name: "Alexis Raquino",
-    role: "Bioengineering",
-  },
-  {
-    name: "Safora Zia",
-    role: "Bioengineering",
-  },
+  { name: "Kirby Johnson" },
+  { name: "Kyra Sunil" },
+  { name: "Caleb Liow" },
+  { name: "Alexis Raquino" },
+  { name: "Safora Zia" },
 ]
 
 export function TeamSection() {
   return (
-    <section id="team" className="py-24 lg:py-32 bg-background">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="mb-16">
-          <p className="text-sm font-medium text-muted-foreground mb-4">
-            The Team
-          </p>
-          <h2 className="text-3xl md:text-4xl font-light text-foreground text-balance">
-            Senior Capstone Team
-          </h2>
-          <p className="text-muted-foreground mt-4">
-            BE 177A, Department of Bioengineering, UCLA — 2025/2026
-          </p>
-        </div>
+    <section id="team" className="py-20 lg:py-28 bg-[var(--background)]">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+        <SectionHeader
+          label="The Team"
+          title="Senior Capstone Team"
+          description="BE 177A, Department of Bioengineering, UCLA — 2025/2026"
+          centered
+        />
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
-          {team.map((member) => (
-            <Card
-              key={member.name}
-              className="border border-border bg-card hover:shadow-lg transition-all duration-300"
+        {/* Team Photo */}
+        <FadeIn className="mb-16">
+          <div className="max-w-3xl mx-auto">
+            <motion.div
+              whileHover={{ scale: 1.01 }}
+              transition={{ duration: 0.3 }}
+              className="relative aspect-[3/4] sm:aspect-[4/5] md:aspect-[3/4] overflow-hidden rounded-2xl bg-[var(--background-secondary)] border border-[var(--border-light)] shadow-lg"
             >
-              <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 rounded-full bg-muted mb-4 flex items-center justify-center mx-auto">
-                  <span className="text-xl font-medium text-muted-foreground">
-                    {member.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}
-                  </span>
-                </div>
-                <h3 className="text-base font-medium text-foreground mb-1">
-                  {member.name}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {member.role}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+              <Image
+                src="/images/team-photo.jpg"
+                alt="GaitWay capstone team members"
+                fill
+                className="object-cover"
+                priority
+              />
+            </motion.div>
+          </div>
+        </FadeIn>
 
-        <div className="bg-muted/50 rounded-lg p-8 lg:p-12">
-          <h3 className="text-lg font-medium text-foreground mb-2">
-            Faculty Advisor
-          </h3>
-          <p className="text-foreground font-medium text-xl mb-1">
-            Professor Sotiris Masmanidis
-          </p>
-          <p className="text-muted-foreground">
-            Department of Bioengineering, UCLA
-          </p>
-        </div>
+        {/* Team Members */}
+        <Stagger className="flex flex-wrap justify-center gap-4 mb-16">
+          {team.map((member, index) => (
+            <StaggerItem key={member.name}>
+              <motion.div
+                whileHover={{ y: -2 }}
+                transition={{ duration: 0.2 }}
+                className="bg-card border border-[var(--border)] rounded-full px-6 py-3 hover:shadow-md transition-shadow duration-300"
+              >
+                <span className="text-sm font-medium text-foreground">
+                  {member.name}
+                </span>
+              </motion.div>
+            </StaggerItem>
+          ))}
+        </Stagger>
+
+        {/* Faculty Advisor */}
+        <FadeIn delay={0.2}>
+          <div className="max-w-lg mx-auto text-center bg-[var(--background-secondary)] rounded-2xl p-8 border border-[var(--border-light)]">
+            <p className="text-sm font-medium text-[var(--accent-teal)] mb-2 tracking-wide uppercase">
+              Faculty Advisor
+            </p>
+            <p className="text-xl font-medium text-foreground mb-1">
+              Professor Sotiris Masmanidis
+            </p>
+            <p className="text-muted-foreground">
+              Department of Neurobiology, UCLA
+            </p>
+          </div>
+        </FadeIn>
       </div>
     </section>
   )
