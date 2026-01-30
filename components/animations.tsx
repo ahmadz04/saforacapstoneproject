@@ -79,7 +79,7 @@ export function FadeIn({
   delay = 0,
   direction = "up",
   duration = 0.6,
-  once = true,
+  once = false,
 }: FadeInProps) {
   const shouldReduceMotion = useReducedMotion()
 
@@ -137,7 +137,7 @@ export function Stagger({
     <motion.div
       initial="initial"
       whileInView="animate"
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: false, margin: "-80px" }}
       variants={{
         initial: {},
         animate: {
@@ -220,7 +220,7 @@ export function SectionHeader({
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: false, margin: "-80px" }}
       transition={{
         duration: 0.6,
         ease: premiumEase,
@@ -231,7 +231,7 @@ export function SectionHeader({
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ delay: 0.1, duration: 0.5, ease: premiumEase }}
           className="eyebrow-label mb-3"
         >
@@ -250,7 +250,7 @@ export function SectionHeader({
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ delay: 0.2, duration: 0.5, ease: premiumEase }}
           className={`text-muted-foreground mt-4 ${centered ? "max-w-2xl mx-auto" : ""}`}
         >
@@ -431,7 +431,7 @@ export function PremiumCard({ children, className = "", onClick }: PremiumCardPr
       }}
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: false, margin: "-80px" }}
       transition={revealTransition}
     >
       {/* Subtle accent line on hover */}

@@ -25,11 +25,11 @@ export function TeamSection() {
 
         {/* Team Photo */}
         <FadeIn className="mb-8">
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-xs mx-auto">
             <motion.div
               whileHover={{ scale: 1.01 }}
               transition={{ duration: 0.3 }}
-              className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-[var(--background-secondary)] border border-[var(--border-light)] shadow-lg"
+              className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-[var(--background-secondary)] border border-[var(--border-light)] shadow-lg"
             >
               <Image
                 src="/images/team-photo.jpg"

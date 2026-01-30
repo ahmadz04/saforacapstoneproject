@@ -13,6 +13,7 @@ const smoothEase = [0.25, 0.1, 0.25, 1]
 
 const navLinks = [
   { href: "#overview", label: "Overview" },
+  { href: "#challenge", label: "Challenge" },
   { href: "#solution", label: "Solution" },
   { href: "#technology", label: "Technology" },
   { href: "#results", label: "Results" },
