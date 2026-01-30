@@ -78,37 +78,67 @@ export function HeroSection() {
             </motion.div>
           </div>
 
-          {/* Right Placeholder - Device Render */}
+          {/* Right - Animated Logo */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             className="hidden lg:flex items-center justify-center"
           >
-            <div className="relative w-full aspect-square max-w-md">
-              {/* Placeholder for CAD render / device image */}
-              <div className="w-full h-full rounded-3xl bg-[var(--background-secondary)] border border-[var(--border-light)] flex items-center justify-center">
-                <div className="text-center p-8">
-                  <div className="w-24 h-24 mx-auto mb-4 rounded-2xl bg-[var(--background-tertiary)] flex items-center justify-center">
-                    <svg
-                      className="w-12 h-12 text-[var(--foreground-muted)]"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
-                      />
-                    </svg>
-                  </div>
-                  <p className="text-sm text-[var(--foreground-muted)]">
-                    [Placeholder: GaitWay device / CAD render]
-                  </p>
-                </div>
-              </div>
+            <div className="relative w-full aspect-square max-w-md flex items-center justify-center">
+              {/* Ambient glow ring */}
+              <motion.div
+                className="absolute inset-0 flex items-center justify-center"
+                animate={{
+                  scale: [1, 1.05, 1],
+                  opacity: [0.3, 0.5, 0.3],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <div className="w-64 h-64 rounded-full bg-[var(--accent-teal)]/10 blur-3xl" />
+              </motion.div>
+
+              {/* Logo with floating + subtle pulse */}
+              <motion.div
+                animate={{
+                  y: [0, -12, 0],
+                  scale: [1, 1.02, 1],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="relative z-10"
+              >
+                <motion.div
+                  animate={{
+                    filter: [
+                      "drop-shadow(0 10px 30px rgba(18, 77, 84, 0.15))",
+                      "drop-shadow(0 20px 40px rgba(18, 77, 84, 0.25))",
+                      "drop-shadow(0 10px 30px rgba(18, 77, 84, 0.15))",
+                    ],
+                  }}
+                  transition={{
+                    duration: 5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  <Image
+                    src="/images/gaitway-hero.png"
+                    alt="GaitWay"
+                    width={400}
+                    height={200}
+                    className="object-contain"
+                    priority
+                  />
+                </motion.div>
+              </motion.div>
             </div>
           </motion.div>
         </div>

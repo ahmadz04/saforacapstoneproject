@@ -5,10 +5,10 @@ import { FadeIn, SectionHeader, Stagger, StaggerItem } from "./animations"
 import Image from "next/image"
 
 const team = [
-  { name: "Kirby Johnson" },
-  { name: "Kyra Sunil" },
-  { name: "Caleb Liow" },
   { name: "Alexis Raquino" },
+  { name: "Kirby Johnson" },
+  { name: "Caleb Liow" },
+  { name: "Kyra Sunil" },
   { name: "Safora Zia" },
 ]
 
@@ -22,7 +22,7 @@ export function TeamSection() {
             Senior Capstone Team
           </h2>
           <p className="text-sm text-muted-foreground">
-            BE 177A, Department of Bioengineering, UCLA — 2025/2026
+            BE 177, Department of Bioengineering, UCLA — 2025/2026
           </p>
         </div>
 
@@ -69,7 +69,7 @@ export function TeamSection() {
               Faculty Advisor
             </p>
             <p className="text-base font-medium text-foreground">
-              Professor Sotiris Masmanidis
+              Professor Sotiris Masmanidis, PhD
             </p>
             <p className="text-xs text-muted-foreground">
               Department of Neurobiology, UCLA
