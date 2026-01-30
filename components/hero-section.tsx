@@ -1,11 +1,29 @@
 "use client"
 
+import { useRef, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 
 export function HeroSection() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    // Seamless loop by restarting slightly before end
+    const handleTimeUpdate = () => {
+      if (video.duration - video.currentTime < 0.1) {
+        video.currentTime = 0
+        video.play()
+      }
+    }
+
+    video.addEventListener("timeupdate", handleTimeUpdate)
+    return () => video.removeEventListener("timeupdate", handleTimeUpdate)
+  }, [])
   return (
     <section className="relative min-h-screen flex items-center bg-[var(--background)] overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 lg:px-8 py-32 lg:py-40 w-full">
@@ -78,67 +96,26 @@ export function HeroSection() {
             </motion.div>
           </div>
 
-          {/* Right - Animated Logo */}
+          {/* Right - Video Animation */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             className="hidden lg:flex items-center justify-center"
           >
-            <div className="relative w-full aspect-square max-w-md flex items-center justify-center">
-              {/* Ambient glow ring */}
-              <motion.div
-                className="absolute inset-0 flex items-center justify-center"
-                animate={{
-                  scale: [1, 1.05, 1],
-                  opacity: [0.3, 0.5, 0.3],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
+            <div className="relative w-full max-w-lg">
+              <video
+                ref={videoRef}
+                autoPlay
+                muted
+                playsInline
+                preload="auto"
+                className="w-full h-auto object-contain"
+                style={{ maxHeight: "70vh" }}
               >
-                <div className="w-64 h-64 rounded-full bg-[var(--accent-teal)]/10 blur-3xl" />
-              </motion.div>
-
-              {/* Logo with floating + subtle pulse */}
-              <motion.div
-                animate={{
-                  y: [0, -12, 0],
-                  scale: [1, 1.02, 1],
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="relative z-10"
-              >
-                <motion.div
-                  animate={{
-                    filter: [
-                      "drop-shadow(0 10px 30px rgba(18, 77, 84, 0.15))",
-                      "drop-shadow(0 20px 40px rgba(18, 77, 84, 0.25))",
-                      "drop-shadow(0 10px 30px rgba(18, 77, 84, 0.15))",
-                    ],
-                  }}
-                  transition={{
-                    duration: 5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                >
-                  <Image
-                    src="/images/gaitway-hero.png"
-                    alt="GaitWay"
-                    width={400}
-                    height={200}
-                    className="object-contain"
-                    priority
-                  />
-                </motion.div>
-              </motion.div>
+                <source src="/videos/gaitway-animation.mov" type="video/quicktime" />
+                <source src="/videos/gaitway-animation.mov" type="video/mp4" />
+              </video>
             </div>
           </motion.div>
         </div>
