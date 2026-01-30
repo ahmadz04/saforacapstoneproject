@@ -14,17 +14,20 @@ const team = [
 
 export function TeamSection() {
   return (
-    <section id="team" className="py-12 lg:py-16 bg-[var(--background)] scroll-mt-16 lg:scroll-mt-20">
+    <section id="team" className="py-10 lg:py-12 bg-[var(--background)] scroll-mt-16 lg:scroll-mt-20">
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
-        <SectionHeader
-          label="The Team"
-          title="Senior Capstone Team"
-          description="BE 177A, Department of Bioengineering, UCLA — 2025/2026"
-          centered
-        />
+        <div className="text-center mb-6">
+          <p className="eyebrow-label mb-2">The Team</p>
+          <h2 className="text-2xl md:text-3xl font-medium text-foreground mb-1">
+            Senior Capstone Team
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            BE 177A, Department of Bioengineering, UCLA — 2025/2026
+          </p>
+        </div>
 
         {/* Team Photo */}
-        <FadeIn className="mb-8">
+        <FadeIn className="mb-5">
           <div className="max-w-xs mx-auto">
             <motion.div
               whileHover={{ scale: 1.01 }}
@@ -43,13 +46,13 @@ export function TeamSection() {
         </FadeIn>
 
         {/* Team Members */}
-        <Stagger className="flex flex-wrap justify-center gap-3 mb-8">
-          {team.map((member, index) => (
+        <Stagger className="flex flex-wrap justify-center gap-2 mb-5">
+          {team.map((member) => (
             <StaggerItem key={member.name}>
               <motion.div
                 whileHover={{ y: -2 }}
                 transition={{ duration: 0.2 }}
-                className="bg-card border border-[var(--border)] rounded-full px-5 py-2 hover:shadow-md transition-shadow duration-300"
+                className="bg-card border border-[var(--border)] rounded-full px-4 py-1.5 hover:shadow-md transition-shadow duration-300"
               >
                 <span className="text-sm font-medium text-foreground">
                   {member.name}
@@ -61,14 +64,14 @@ export function TeamSection() {
 
         {/* Faculty Advisor */}
         <FadeIn delay={0.2}>
-          <div className="max-w-md mx-auto text-center bg-[var(--background-secondary)] rounded-2xl p-6 border border-[var(--border-light)]">
-            <p className="text-sm font-medium text-[var(--accent-teal)] mb-1 tracking-wide uppercase">
+          <div className="max-w-sm mx-auto text-center bg-[var(--background-secondary)] rounded-xl p-4 border border-[var(--border-light)]">
+            <p className="text-xs font-medium text-[var(--accent-teal)] mb-0.5 tracking-wide uppercase">
               Faculty Advisor
             </p>
-            <p className="text-lg font-medium text-foreground mb-0.5">
+            <p className="text-base font-medium text-foreground">
               Professor Sotiris Masmanidis
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs text-muted-foreground">
               Department of Neurobiology, UCLA
             </p>
           </div>
