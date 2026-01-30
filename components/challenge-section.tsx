@@ -59,7 +59,7 @@ export function ChallengeSection() {
   }
 
   return (
-    <section id="challenge" className="py-20 lg:py-28 bg-[var(--background)]">
+    <section id="challenge" className="py-20 lg:py-28 bg-[var(--background)] scroll-mt-16 lg:scroll-mt-20">
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
         <SectionHeader
           label="Understanding the Challenge"
