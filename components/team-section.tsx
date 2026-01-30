@@ -28,14 +28,14 @@ export function TeamSection() {
 
         {/* Team Photo */}
         <FadeIn className="mb-5">
-          <div className="max-w-xs mx-auto">
+          <div className="max-w-lg mx-auto">
             <motion.div
               whileHover={{ scale: 1.01 }}
               transition={{ duration: 0.3 }}
-              className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-[var(--background-secondary)] border border-[var(--border-light)] shadow-lg"
+              className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-[var(--background-secondary)] border border-[var(--border-light)] shadow-lg"
             >
               <Image
-                src="/images/team-photo.jpg"
+                src="/images/team-photo.png"
                 alt="GaitWay capstone team members"
                 fill
                 className="object-cover"
