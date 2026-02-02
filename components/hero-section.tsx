@@ -101,13 +101,29 @@ export function HeroSection() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="hidden lg:flex items-center justify-center"
+            className="hidden lg:flex flex-col items-center justify-center gap-8"
           >
             <div className="relative w-full max-w-lg">
+              <div className="relative overflow-hidden rounded-2xl bg-[var(--background)] border border-[var(--border-light)] shadow-lg">
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  muted
+                  playsInline
+                  preload="auto"
+                  className="w-full h-auto object-contain mix-blend-multiply"
+                  style={{ maxHeight: "70vh", backgroundColor: "var(--background)" }}
+                >
+                  <source src="/videos/gaitway-animation.mov" type="video/quicktime" />
+                  <source src="/videos/gaitway-animation.mov" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+            <div className="relative w-full max-w-lg">
               <video
-                ref={videoRef}
                 autoPlay
                 muted
+                loop
                 playsInline
                 preload="auto"
                 className="w-full h-auto object-contain"

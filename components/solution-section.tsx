@@ -1,5 +1,7 @@
 "use client"
 
+import Image from "next/image"
+import { motion } from "framer-motion"
 import { Watch, Bluetooth, Battery, Smartphone, Sun } from "lucide-react"
 import { FadeIn, SectionHeader } from "./animations"
 
@@ -23,15 +25,20 @@ export function SolutionSection() {
         />
 
         <FadeIn className="mb-12">
-          <div className="relative aspect-[21/9] overflow-hidden rounded-2xl bg-[var(--background)] border border-[var(--border-light)] flex items-center justify-center">
-            <div className="text-center p-8">
-              <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-[var(--background-secondary)] flex items-center justify-center">
-                <Watch className="w-10 h-10 text-[var(--foreground-muted)]" />
-              </div>
-              <p className="text-sm text-[var(--foreground-muted)]">
-                [Placeholder: Complete GaitWay sensor system]
-              </p>
-            </div>
+          <div className="max-w-3xl mx-auto">
+            <motion.div
+              whileHover={{ scale: 1.01 }}
+              transition={{ duration: 0.3 }}
+              className="relative aspect-[2/1] overflow-hidden rounded-2xl bg-[var(--background)] border border-[var(--border-light)] shadow-lg"
+            >
+              <Image
+                src="/gaitway-system.png"
+                alt="Complete GaitWay sensor system"
+                fill
+                className="object-cover"
+                priority
+              />
+            </motion.div>
           </div>
         </FadeIn>
 
