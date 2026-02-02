@@ -101,7 +101,7 @@ export function HeroSection() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="hidden lg:flex flex-col items-center justify-center gap-8"
+            className="hidden lg:flex items-center justify-center"
           >
             <div className="relative w-full max-w-lg">
               <div className="relative overflow-hidden rounded-2xl bg-[var(--background)] border border-[var(--border-light)] shadow-lg">
@@ -118,20 +118,6 @@ export function HeroSection() {
                   <source src="/videos/gaitway-animation.mov" type="video/mp4" />
                 </video>
               </div>
-            </div>
-            <div className="relative w-full max-w-lg">
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="auto"
-                className="w-full h-auto object-contain"
-                style={{ maxHeight: "70vh" }}
-              >
-                <source src="/videos/gaitway-animation.mov" type="video/quicktime" />
-                <source src="/videos/gaitway-animation.mov" type="video/mp4" />
-              </video>
             </div>
           </motion.div>
         </div>
