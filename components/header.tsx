@@ -55,7 +55,7 @@ export function Header({ showLogo = true }: HeaderProps) {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
+        isScrolled || isMobileMenuOpen
           ? "bg-[var(--background)]/95 backdrop-blur-md border-b border-[var(--border)]"
           : "bg-transparent"
       }`}
