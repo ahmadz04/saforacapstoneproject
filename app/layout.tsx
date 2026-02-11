@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   title: 'GaitWay | UCLA Bioengineering Capstone 2025–2026',
   description: 'GaitWay is a modular wearable gait analysis system for continuous monitoring of motor symptoms in Parkinson\'s disease patients, designed for everyday use outside the clinic.',
   generator: 'v0.app',
+  manifest: '/manifest.json',
   icons: {
     icon: [
       {
@@ -29,7 +30,13 @@ export const metadata: Metadata = {
         type: 'image/svg+xml',
       },
     ],
-    apple: '/apple-icon.png',
+    apple: [
+      {
+        url: '/icon-180x180.png',
+        sizes: '180x180',
+        type: 'image/png',
+      },
+    ],
   },
 }
 
